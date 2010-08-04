@@ -64,10 +64,10 @@ func (c *P_Controller) Run() {
     for {
         select {
         case sp = <-c.in:
-            out = (in - sp) * c.kP
+            out = (sp - in) * c.kP
         case c.out <- out:
         case in = <-c.FdBck.in:
-            out = (in - sp) * c.kP
+            out = (sp - in) * c.kP
         }
     }
 }

@@ -5,7 +5,7 @@ import "goctrl"
 func main() {
     // Create UserInput, TimeStep, RateModel and NetChanOut
     u := NewUserInput()
-    p := NewP_Controller(0.1)
+    p := NewP_Controller(0.000001)
     t := NewTimeStep(50)
     r := NewRateModel(0.01)
     m := NewMult()
