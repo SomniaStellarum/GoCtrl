@@ -61,12 +61,13 @@ func (c *P_Controller) Run() {
     in := sp
     out := (sp - in) * c.kP
     c.out <- out
-    for in := range c.FdBck.in {
-        out := (in - sp) * c.kP
-        c.out <- out
+    for {
         select {
         case sp = <-c.in:
-        default:
+            out = (in - sp) * c.kP
+        case c.out <- out:
+        case in = <-c.FdBck.in:
+            out = (in - sp) * c.kP
         }
     }
 }
@@ -96,7 +97,6 @@ func (r *RateModel) Run() {
         default:
         }
         dt := <-r.T.in
-        fmt.Printf("Time Received\n")
         out = r.gn * dt * in + out
         r.out <- out
     }
